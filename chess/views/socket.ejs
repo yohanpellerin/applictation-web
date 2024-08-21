@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/chess.css">
+    <meta charset="UTF-8">
+    <title>Chess.com</title>
+</head>
+<body class="bodyinit">
+    <h1 id="bv">Bienvenue</h1>
+    <audio id="echec" src="/musiques/chessAtack.wav"></audio>
+    <audio id="win" src="/musiques/win.wav"></audio>
+    <audio id="moov" src="/musiques/moov.wav"></audio>
+    <audio id="eat" src="/musiques/eat.wav"></audio>
+    <ul id="messages"></ul>
+    <p id="couleur"></p>
+    <p id="mouve"></p>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" placeholder="Entrez votre pseudo">
+        <button>Valider</button>
+    </form>
+
+    <script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
+    <script src="/javascripts/socket2.js"></script>
+</body>
+</html>

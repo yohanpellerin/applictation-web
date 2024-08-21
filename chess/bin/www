@@ -1,0 +1,149 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('chess:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+const io = require('socket.io')(server);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+/**
+ * socket connection listener
+*/
+var room_socket={};
+var joeur1id;
+var nbr_room=1;
+var nbre_connection=undefined;
+var couleur={};
+var pseudo1
+io.on('connection', (socket) => {
+  console.log('le serveur est connecté');
+  socket.on('commencer',(pseudo)=> {
+
+    if ((nbre_connection == undefined) || (nbre_connection == 0)) {
+      console.log('un joueur veut jouer');
+      room = 'room '+nbr_room.toString();
+      socket.join(room);
+      nbre_connection = 1;
+      pseudo1=pseudo;
+      joueur1id=socket.id;
+      io.emit('chat message',`${pseudo} est prêt à jouer`)
+      room_socket[socket.id]=room;
+      couleur[socket.id]="w";
+      console.log(`${room} was created`);
+    }
+    else {
+      console.log('un deuxieme joueur veut jouer');
+      socket.join(room);
+      nbre_connection = 0;
+      io.emit('chat message',`${pseudo} est prêt à jouer`)
+      io.emit('chat message',`${pseudo1} et ${pseudo} ont commencé à jouer`)
+      io.to(socket.id).emit('commencer','noirs');
+      io.to(joueur1id).emit('commencer','blancs')
+      nbr_room++;
+      room_socket[socket.id]=room;
+      couleur[socket.id]="b";
+    }
+  });
+
+  socket.on('mouvement', (a, b,c) => {
+    if ((c && couleur[socket.id]==="w") || (!c && couleur[socket.id]==="b")){
+    console.log('Un joueur a déplacé une pièce');
+    // Envoyer le mouvement de pièce à tous les joueurs
+    io.to(room_socket[socket.id]).emit('mouvement', a, b);}
+  })
+  socket.on('promotion',(a,b) => {
+    console.log('il y a eu une promotion');
+    // Envoyer le mouvement de pièce à tous les joueurs
+    if(b && couleur[socket.id]==="w"){
+    io.to(room_socket[socket.id]).emit('promotion', a);}
+  })
+});
+
+
+
+

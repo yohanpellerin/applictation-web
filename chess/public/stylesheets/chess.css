@@ -1,0 +1,161 @@
+.bodyinit{
+    background-image: url('/images/echec_presentation.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.no-background {
+    background-image: none ;
+}
+h1 {
+    font-size: 36px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: absolute; /* Ajouter cette ligne */
+    top: 20px; /* Ajouter cette ligne */
+}
+.couleur{
+    font-size: 200%;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: black;
+    text-align: center;
+}
+form{
+    font-size: 36px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: absolute; /* Ajouter cette ligne */
+    right: 30px;
+    top: 30px; /* Ajouter cette ligne */
+}
+li{
+    font-size: 17px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    margin-top: 1px;
+}
+.container {
+    display: flex;
+    background-color: #f2f2f2;
+}
+
+.left {
+    flex: 3; /* 75% de la largeur */
+    background-color: #f2f2f2;
+    position:absolute;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    flex: 1; /* 25% de la largeur */
+    background-color: #e0e0e0;
+    position:absolute;
+}
+.jeu{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 colonnes de largeur égale */
+    grid-template-rows: repeat(10, 1fr); /* 10 lignes de hauteur égale */
+    max-height: 85vh; /* Hauteur maximale de 90% de la hauteur de la page */
+    max-width: 85vh; /* Hauteur maximale de 90% de la hauteur de la page */
+    height: 70vw;
+    width: 70vw;  /* Largeur maximale de 80% de la largeur de la page */
+    /*width: 85vh;*/
+    border: 1px solid #000000; /* 2px d'épaisseur, style solide, couleur rouge (#ff0000) */
+    background-color: dimgrey;
+}
+.grid-containerBoard{
+    grid-column-start: 2;
+    grid-column-end: 10;
+    grid-row-start: 2;
+    grid-row-end: 10;
+    background-image: url("/images/board.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 10 colonnes de largeur égale */
+    grid-template-rows: repeat(8, 1fr); /* 10 lignes de hauteur égale */
+    position: relative;
+}
+.grid-itemCooX{
+    font-size: 200%;
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+
+}
+.grid-item {
+    background-size: contain;
+}
+.promotion-window.top{
+    bottom: 0;
+    top: auto;
+}
+
+.promotion-window.bot{
+    bottom: auto;
+    top: 0;
+}
+.promotion-window{
+    height: 50%;
+    width: 12.5%;
+    background-color: aliceblue;
+    border-radius: 10%;
+    border: 2px solid #000;
+    box-sizing: border-box; /* Inclure la bordure et le rembourrage dans la largeur */
+    position: absolute;
+    background-size: contain;
+
+}
+.promotion-piece.bb{
+    background-image: url("/images/bb.png");
+    background-size: contain;
+}
+.promotion-piece.bq{
+    background-image: url("/images/bq.png");
+    background-size: contain;
+}
+.promotion-piece.br{
+    background-image: url("/images/br.png");
+    background-size: contain;
+}
+.promotion-piece.bn{
+    background-image: url("/images/bn.png");
+    background-size: contain;
+}
+.promotion-piece.wb{
+    background-image: url("/images/wb.png");
+    background-size: contain;
+}
+.promotion-piece.wq{
+    background-image: url("/images/wq.png");
+    background-size: contain;
+}
+.promotion-piece.wr{
+    background-image: url("/images/wr.png");
+    background-size: contain;
+}
+.promotion-piece.wn{
+    background-image: url("/images/wn.png");
+    background-size: contain;
+}
+.promotion-piece{
+    background-position-y: bottom;
+    background-repeat: no-repeat;
+    position: relative;
+    padding-top: 100%;
+    background-size: contain;
+}
+.case_mangeable{
+    background-position : center;
+    border: 2px solid #223b5b;
+}
